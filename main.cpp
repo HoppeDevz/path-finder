@@ -15,10 +15,13 @@ struct coords {
     int n;
 };
 
+const int matrixRows = 7;
+const int matrixColumns = 7;
 
-// start -> 0,0
-// end -> 6,6
-int matrix[7][7] = {
+const coords matrixStartIn = { 0, 0 };
+const coords matrixEndsIn = { 6, 6 };
+
+int matrix[matrixRows][matrixColumns] = {
     { 1, 1, 1, 1, 1, 0, 1 },
     { 1, 0, 0, 0, 1, 0, 1 },
     { 1, 0, 1, 1, 1, 1, 1 },
@@ -30,9 +33,9 @@ int matrix[7][7] = {
 
 void showMatrix() {
 
-    for (int i = 0; i < 7; i++) {
+    for (int i = 0; i < matrixRows; i++) {
 
-        for (int j = 0; j < 7; j++) {
+        for (int j = 0; j < matrixColumns; j++) {
 
             if (matrix[i][j] != 1 && matrix[i][j] != 0)
                 std::cout << char(219) << char(219);
@@ -64,9 +67,9 @@ int getLeft(coords c) {
 
 void showNumericMatrix() {
 
-    for (int i = 0; i < 7; i++) {
+    for (int i = 0; i < matrixRows; i++) {
 
-        for (int j = 0; j < 7; j++) {
+        for (int j = 0; j < matrixColumns; j++) {
             
             std::cout << matrix[i][j] << " ";
         }
@@ -77,9 +80,9 @@ void showNumericMatrix() {
 
 void drawMatrixPath() {
 
-    for (int i = 0; i < 7; i++) {
+    for (int i = 0; i < matrixRows; i++) {
 
-        for (int j = 0; j < 7; j++) {
+        for (int j = 0; j < matrixColumns; j++) {
             
             if (matrix[i][j] == 0)
                 std::cout << (char)32 << (char)32;
@@ -104,12 +107,13 @@ void drawMatrixPath() {
 
 int main() {
 
-    std::queue<int> paths[1024];
-
+    // FIRST POSITION OF MATRIX
     coords firstPos = { 0, 0, 0 };
 
+    // CREATE QUEUE
     std::queue<coords> myQueue;
 
+    // PUSH FIRST POSTIION IN QUEUE
     myQueue.push(firstPos);
 
     while (!myQueue.empty()) {
@@ -129,14 +133,14 @@ int main() {
             myQueue.push(topCoords);
         }
 
-        if (firstItem.j + 1 <= 7 && getRight(firstItem) == 1) {
+        if (firstItem.j + 1 <= matrixColumns && getRight(firstItem) == 1) {
 
             // right -> (i, j+1)
             coords rightCoords = { firstItem.i, firstItem.j + 1, n };
             myQueue.push(rightCoords);
         }
 
-        if (firstItem.i + 1 <= 7 && getBottom(firstItem) == 1) {
+        if (firstItem.i + 1 <= matrixRows && getBottom(firstItem) == 1) {
 
             // bottom -> (i+1, j)
             coords bottomCoords = { firstItem.i + 1, firstItem.j, n };
@@ -157,11 +161,11 @@ int main() {
 
     std::cout << std::endl << std::endl;
 
-    // start -> 0,0
-    // end -> 6,6
+    // start -> matrixStartsIn
+    // end -> matrixEndsIn
 
     std::queue<coords> drawQueue;
-    coords endPos = { 6, 6, 0 };
+    coords endPos = matrixEndsIn;
 
     drawQueue.push(endPos);    
 
@@ -182,14 +186,14 @@ int main() {
             drawQueue.push(topCoords);
         }
 
-        if (firstItem.j + 1 <= 7 && getRight(firstItem) == firstItemValue + 1) {
+        if (firstItem.j + 1 <= matrixColumns && getRight(firstItem) == firstItemValue + 1) {
 
             // right -> (i, j+1)
             coords rightCoords = { firstItem.i, firstItem.j + 1, 0 };
             drawQueue.push(rightCoords);
         }
 
-        if (firstItem.i + 1 <= 7 && getBottom(firstItem) == firstItemValue + 1) {
+        if (firstItem.i + 1 <= matrixRows && getBottom(firstItem) == firstItemValue + 1) {
 
             // bottom -> (i+1, j)
             coords bottomCoords = { firstItem.i + 1, firstItem.j, 0 };
