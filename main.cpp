@@ -18,9 +18,6 @@ struct coords {
 const int matrixRows = 7;
 const int matrixColumns = 7;
 
-const coords matrixStartIn = { 0, 0 };
-const coords matrixEndsIn = { 6, 6 };
-
 int matrix[matrixRows][matrixColumns] = {
     { 1, 1, 1, 1, 1, 0, 1 },
     { 1, 0, 0, 0, 1, 0, 1 },
@@ -30,6 +27,9 @@ int matrix[matrixRows][matrixColumns] = {
     { 1, 0, 0, 1, 0, 1, 0 },
     { 1, 1, 0, 1, 1, 1, 1 }
 };
+
+const coords matrixStartIn = { 0, 0, 0 };
+const coords matrixEndsIn = { 6, 6, 0 };
 
 void showMatrix() {
 
@@ -107,14 +107,14 @@ void drawMatrixPath() {
 
 int main() {
 
-    // FIRST POSITION OF MATRIX
-    coords firstPos = { 0, 0, 0 };
+    // SHOW MATRIX WITH 0 AND 1
+    showNumericMatrix();
 
     // CREATE QUEUE
     std::queue<coords> myQueue;
 
     // PUSH FIRST POSTIION IN QUEUE
-    myQueue.push(firstPos);
+    myQueue.push(matrixStartIn);
 
     while (!myQueue.empty()) {
 
@@ -157,6 +157,7 @@ int main() {
     
     std::cout << std::endl << std::endl;
 
+    // SHOW MATRIX WITH DIFFERENT PATHS
     showNumericMatrix();
 
     std::cout << std::endl << std::endl;
@@ -165,16 +166,13 @@ int main() {
     // end -> matrixEndsIn
 
     std::queue<coords> drawQueue;
-    coords endPos = matrixEndsIn;
-
-    drawQueue.push(endPos);    
+    drawQueue.push(matrixEndsIn);    
 
     while (!drawQueue.empty()) {
 
         coords firstItem = drawQueue.front();
 
         int firstItemValue = matrix[firstItem.i][firstItem.j];
-
         matrix[firstItem.i][firstItem.j] = 32;
 
         drawQueue.pop();
@@ -207,13 +205,13 @@ int main() {
             drawQueue.push(leftCoords);
         }
     }
-
     std::cout << std::endl << std::endl;
 
+    // SHOW MATRIX WITH DIFFERENT PATHS AND MINIMUM PATH
     showNumericMatrix();
-
     std::cout << std::endl << std::endl;
 
+    // DRAW MATRIX AND MINIMUM PATH
     drawMatrixPath();
 
     system("pause");
