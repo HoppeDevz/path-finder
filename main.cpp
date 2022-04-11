@@ -1,8 +1,12 @@
+#include <windows.h>
+
 #include <queue>
 #include <iostream>
 
 #include <chrono>
 #include <thread>
+
+HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 
 struct coords {
     int i;
@@ -65,6 +69,33 @@ void showNumericMatrix() {
         for (int j = 0; j < 7; j++) {
             
             std::cout << matrix[i][j] << " ";
+        }
+
+        std::cout << std::endl;
+    }
+}
+
+void drawMatrixPath() {
+
+    for (int i = 0; i < 7; i++) {
+
+        for (int j = 0; j < 7; j++) {
+            
+            if (matrix[i][j] == 0)
+                std::cout << (char)32 << (char)32;
+            
+            if (matrix[i][j] == 32) {
+                
+                SetConsoleTextAttribute(hConsole, 10);
+                std::cout << (char)219 << (char)219;
+                SetConsoleTextAttribute(hConsole, 7);
+            }
+
+            if (matrix[i][j] != 0 && matrix[i][j] != 32) {
+
+                std::cout << (char)219 << (char)219;
+            }
+
         }
 
         std::cout << std::endl;
@@ -178,6 +209,8 @@ int main() {
     showNumericMatrix();
 
     std::cout << std::endl << std::endl;
+
+    drawMatrixPath();
 
     system("pause");
     return 0;
