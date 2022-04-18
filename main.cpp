@@ -38,9 +38,9 @@ void showMatrix() {
         for (int j = 0; j < matrixColumns; j++) {
 
             if (matrix[i][j] != 1 && matrix[i][j] != 0)
-                std::cout << char(219) << char(219);
+                std::cout << (char)219 << (char)219;
             else 
-                std::cout << char(32) << char(32);
+                std::cout << (char)32 << (char)32;
             
         }
 
